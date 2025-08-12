@@ -14,9 +14,6 @@ RUN mkdir -p /home/node/.n8n/nodes && \
     chown -R node:node /home/node/.n8n && \
     chmod -R 755 /home/node/.n8n
 
-# Set NPM configuration
-RUN npm config set unsafe-perm true
-
 # Switch to node user
 USER node
 

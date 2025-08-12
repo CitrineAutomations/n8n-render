@@ -9,6 +9,7 @@ RUN apk add --no-cache \
     git
 
 # Create directories and set permissions
+# Note: Removed invalid npm config line that was causing build failures
 RUN mkdir -p /home/node/.n8n/nodes && \
     mkdir -p /home/node/.n8n/custom && \
     chown -R node:node /home/node/.n8n && \
@@ -28,6 +29,7 @@ ENV NODE_FUNCTION_ALLOW_EXTERNAL="*"
 ENV NPM_CONFIG_PREFIX=/home/node/.n8n
 ENV N8N_METRICS=false
 ENV N8N_LOG_LEVEL=error
+ENV N8N_TRUSTED_PROXY_IPS="*"
 
 WORKDIR /home/node/.n8n
 

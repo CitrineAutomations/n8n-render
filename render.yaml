@@ -32,6 +32,8 @@ services:
           property: password
       - key: DB_POSTGRESDB_SCHEMA
         value: public
+      - key: DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED
+        value: "false"
       - key: WEBHOOK_URL
         value: https://your-n8n-app.onrender.com/
       - key: N8N_ENCRYPTION_KEY

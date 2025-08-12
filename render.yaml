@@ -1,10 +1,10 @@
 services:
   - type: web
     name: n8n
-    env: docker
-    region: oregon # optional (defaults to oregon)
-    plan: standard-2x # increased memory allocation
-    branch: main # optional (defaults to master)
+    runtime: docker
+    region: oregon
+    plan: standard
+    branch: main
     numInstances: 1
     healthCheckPath: /
     envVars:
@@ -34,32 +34,48 @@ services:
         value: public
       - key: DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED
         value: "false"
-      - key: WEBHOOK_URL
-        value: https://your-n8n-app.onrender.com/
       - key: N8N_ENCRYPTION_KEY
-        value: YOUR_ENCRYPTION_KEY_HERE
-      - key: GENERIC_TIMEZONE
-        value: America/Sao_Paulo
-      - key: TZ
-        value: America/Sao_Paulo
+        generateValue: true
+      - key: N8N_HOST
+        value: 0.0.0.0
+      - key: N8N_PORT
+        value: "5678"
+      - key: N8N_PROTOCOL
+        value: https
       - key: N8N_LOG_LEVEL
         value: error
-      - key: NODE_OPTIONS
-        value: --max-old-space-size=2048
       - key: N8N_METRICS
-        value: false
+        value: "false"
+      - key: N8N_DIAGNOSTICS_ENABLED
+        value: "false"
+      - key: N8N_PERSONALIZATION_ENABLED
+        value: "false"
+      - key: N8N_TEMPLATES_ENABLED
+        value: "false"
+      - key: N8N_COMMUNITY_PACKAGES_ENABLED
+        value: "true"
+      - key: N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE
+        value: "true"
+      - key: N8N_UNVERIFIED_PACKAGES_ENABLED
+        value: "true"
+      - key: N8N_VERIFIED_PACKAGES_ENABLED
+        value: "true"
+      - key: N8N_TRUSTED_PROXY_IPS
+        value: "*"
+      - key: NODE_OPTIONS
+        value: "--max-old-space-size=2048"
       - key: EXECUTIONS_DATA_PRUNE
-        value: true
+        value: "true"
       - key: EXECUTIONS_DATA_MAX_AGE
-        value: 168
+        value: "168"
       - key: EXECUTIONS_DATA_SAVE_ON_ERROR
         value: all
       - key: EXECUTIONS_DATA_SAVE_ON_SUCCESS
         value: none
       - key: EXECUTIONS_DATA_SAVE_ON_PROGRESS
-        value: false
+        value: "false"
       - key: EXECUTIONS_DATA_SAVE_MANUAL_EXECUTIONS
-        value: false
+        value: "false"
     disk:
       name: n8n-disk
       mountPath: /home/node/.n8n
@@ -67,4 +83,4 @@ services:
 
 databases:
   - name: n8n-db
-    plan: basic-2gb
+    plan: basic-1gb

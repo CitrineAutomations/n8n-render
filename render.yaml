@@ -3,7 +3,7 @@ services:
     name: n8n
     env: docker
     region: oregon # optional (defaults to oregon)
-    plan: standard # optional (defaults to starter)
+    plan: standard-2x # increased memory allocation
     branch: main # optional (defaults to master)
     numInstances: 1
     healthCheckPath: /
@@ -41,7 +41,11 @@ services:
       - key: TZ
         value: America/Sao_Paulo
       - key: N8N_LOG_LEVEL
-        value: info
+        value: error
+      - key: NODE_OPTIONS
+        value: --max-old-space-size=2048
+      - key: N8N_METRICS
+        value: false
       - key: EXECUTIONS_DATA_PRUNE
         value: true
       - key: EXECUTIONS_DATA_MAX_AGE
@@ -61,4 +65,4 @@ services:
 
 databases:
   - name: n8n-db
-    plan: basic-1gb
+    plan: basic-2gb

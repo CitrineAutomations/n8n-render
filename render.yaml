@@ -10,17 +10,6 @@ services:
     envVars:
       - key: DB_TYPE
         value: postgresdb
-      # Database credentials - Set these in Render dashboard for security
-      - key: DB_POSTGRESDB_HOST
-        value: "your-database-host-here"
-      - key: DB_POSTGRESDB_DATABASE
-        value: "your-database-name-here"
-      - key: DB_POSTGRESDB_PORT
-        value: "5432"
-      - key: DB_POSTGRESDB_USER
-        value: "your-database-user-here"
-      - key: DB_POSTGRESDB_PASSWORD
-        value: "your-database-password-here"
       - key: DB_POSTGRESDB_SCHEMA
         value: public
       - key: DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED

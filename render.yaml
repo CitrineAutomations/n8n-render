@@ -10,26 +10,17 @@ services:
     envVars:
       - key: DB_TYPE
         value: postgresdb
+      # Database credentials - Set these in Render dashboard for security
       - key: DB_POSTGRESDB_HOST
-        fromDatabase:
-          name: n8n-db
-          property: host
+        value: "your-database-host-here"
       - key: DB_POSTGRESDB_DATABASE
-        fromDatabase:
-          name: n8n-db
-          property: database
+        value: "your-database-name-here"
       - key: DB_POSTGRESDB_PORT
-        fromDatabase:
-          name: n8n-db
-          property: port
+        value: "5432"
       - key: DB_POSTGRESDB_USER
-        fromDatabase:
-          name: n8n-db
-          property: user
+        value: "your-database-user-here"
       - key: DB_POSTGRESDB_PASSWORD
-        fromDatabase:
-          name: n8n-db
-          property: password
+        value: "your-database-password-here"
       - key: DB_POSTGRESDB_SCHEMA
         value: public
       - key: DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED
@@ -80,7 +71,3 @@ services:
       name: n8n-disk
       mountPath: /home/node/.n8n
       sizeGB: 5
-
-databases:
-  - name: n8n-db
-    plan: basic-1gb

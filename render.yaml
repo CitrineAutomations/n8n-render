@@ -8,12 +8,7 @@ services:
     numInstances: 1
     healthCheckPath: /
     envVars:
-      - key: DB_TYPE
-        value: postgresdb
-      - key: DB_POSTGRESDB_SCHEMA
-        value: public
-      - key: DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED
-        value: "false"
+      # Database configuration removed - using SQLite
       - key: N8N_ENCRYPTION_KEY
         generateValue: true
       - key: N8N_HOST

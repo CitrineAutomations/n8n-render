@@ -58,5 +58,5 @@ services:
         value: "false"
     disk:
       name: n8n-disk
-      mountPath: /home/node/.n8n
+      mountPath: /opt/render/.n8n
       sizeGB: 5

@@ -1,4 +1,7 @@
-FROM n8nio/n8n:latest
+# n8n 2.0: Pin to stable version for production use
+# Note: Task runners are no longer included in n8nio/n8n image
+# If using Python Code nodes, you'll need to set up external task runners with n8nio/runners image
+FROM n8nio/n8n:stable
 
 USER root
 

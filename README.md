@@ -19,7 +19,10 @@ Successfully deploy n8n on Render using Docker with the latest configurations an
 - ✅ Added required `WEBHOOK_URL` environment variable
 - ✅ Updated database instance types to current options
 - ✅ Improved documentation and setup instructions
-- ✅ Compatible with latest n8n versions (1.94.1+)
+- ✅ **Updated for n8n 2.0 compatibility** - See [n8n 2.0 Breaking Changes](https://docs.n8n.io/2-0-breaking-changes/)
+  - OAuth callbacks now require authentication by default
+  - Binary data mode explicitly set to filesystem
+  - Docker image pinned to stable version
 
 ## Environment Variables
 The following variables should be configured in your Render dashboard:

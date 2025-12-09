@@ -76,6 +76,33 @@ After deployment:
 3. Verify N8N is accessible at your domain
 4. Test webhook functionality
 
+## n8n 2.0 Migration Notes
+
+This setup has been updated for n8n 2.0 compatibility. Key changes:
+
+### OAuth Callback Authentication
+- OAuth callbacks now require authentication by default (`N8N_SKIP_AUTH_ON_OAUTH_CALLBACK=false`)
+- This improves security but may require testing your OAuth integrations
+
+### Binary Data Storage
+- Binary data is now stored on filesystem (default for regular mode) instead of in-memory
+- Configured via `N8N_DEFAULT_BINARY_DATA_MODE=filesystem`
+- Ensure your disk has sufficient space for binary data
+
+### Task Runners
+- Task runners are no longer included in the `n8nio/n8n` Docker image
+- If you use **Python Code nodes**, you'll need to set up external task runners:
+  1. Deploy a separate service using `n8nio/runners` image
+  2. Configure `N8N_RUNNERS_ENABLED=true` and external mode settings
+  3. See [n8n task runners documentation](https://docs.n8n.io/hosting/configuration/task-runners/) for details
+- If you don't use Python Code nodes, you can remove Python3 from the Dockerfile
+
+### Docker Image Version
+- Pinned to `n8nio/n8n:stable` for production stability
+- Consider pinning to a specific version (e.g., `2.0.0`) for even more stability
+
+For complete migration details, see: https://docs.n8n.io/2-0-breaking-changes/
+
 ## Troubleshooting
 
 ### If you still experience memory issues:
@@ -88,6 +115,8 @@ After deployment:
 - **Webhooks not working**: Ensure `WEBHOOK_URL` is set correctly
 - **Database connection errors**: Verify database credentials in Render
 - **Permission issues**: Check file permissions in the container
+- **OAuth not working**: Verify `N8N_SKIP_AUTH_ON_OAUTH_CALLBACK=false` is set and test your OAuth flows
+- **Python Code nodes not working**: Set up external task runners with `n8nio/runners` image
 
 ## Support
 

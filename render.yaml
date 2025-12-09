@@ -67,6 +67,12 @@ services:
         value: "false"
       - key: EXECUTIONS_DATA_SAVE_MANUAL_EXECUTIONS
         value: "false"
+      # n8n 2.0: OAuth callbacks now require authentication by default
+      - key: N8N_SKIP_AUTH_ON_OAUTH_CALLBACK
+        value: "false"
+      # n8n 2.0: Binary data mode - filesystem for regular mode, database for queue mode
+      - key: N8N_DEFAULT_BINARY_DATA_MODE
+        value: filesystem
     disk:
       name: n8n-disk
       mountPath: /home/node/.n8n

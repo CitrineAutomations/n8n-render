@@ -1,8 +1,6 @@
-# n8n 2.0: Use stable tag (will auto-update to latest 2.0.x)
-# For production, consider pinning to specific version (e.g., 2.0.0, 2.0.1)
-# Note: Task runners are no longer included in n8nio/n8n image
-# If using Python Code nodes, you'll need to set up external task runners with n8nio/runners image
-FROM n8nio/n8n:stable
+# Pin to n8n 1.123.4 (current version)
+# To upgrade to 2.0, change to: n8nio/n8n:2.0.0 or n8nio/n8n:stable (if 2.0 is stable)
+FROM n8nio/n8n:1.123.4
 
 USER root
 
@@ -28,7 +26,7 @@ USER node
 ARG CACHE_BUST=1
 RUN echo "=== Installing community packages (cache bust: $CACHE_BUST) ===" && \
     cd /home/node/.n8n && \
-    npm init -y && \
+    echo '{"name":"n8n-community-packages","version":"1.0.0"}' > package.json && \
     echo "Installing @n8n/n8n-nodes-langchain..." && \
     npm install @n8n/n8n-nodes-langchain@latest --save --legacy-peer-deps --no-audit --no-fund && \
     echo "Installing n8n-nodes-attio..." && \

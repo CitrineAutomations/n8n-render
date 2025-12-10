@@ -22,6 +22,21 @@ RUN mkdir -p /home/node/.n8n/nodes && \
 # Switch to node user
 USER node
 
+# Pre-install required community packages to ensure they're available on startup
+# This prevents "Unrecognized node type" errors
+# Cache bust: Add timestamp to force rebuild when packages need updating
+ARG CACHE_BUST=1
+RUN echo "=== Installing community packages (cache bust: $CACHE_BUST) ===" && \
+    cd /home/node/.n8n && \
+    npm init -y && \
+    echo "Installing @n8n/n8n-nodes-langchain..." && \
+    npm install @n8n/n8n-nodes-langchain@latest --save --legacy-peer-deps --no-audit --no-fund && \
+    echo "Installing n8n-nodes-attio..." && \
+    npm install n8n-nodes-attio@latest --save --legacy-peer-deps --no-audit --no-fund && \
+    echo "=== Verifying installation ===" && \
+    ls -la node_modules/ | grep -E "(langchain|attio)" && \
+    echo "=== Community packages installation completed ==="
+
 # Set environment variables with memory configuration
 ENV NODE_OPTIONS="--max-old-space-size=2048"
 ENV N8N_CUSTOM_EXTENSIONS="/home/node/.n8n/custom"

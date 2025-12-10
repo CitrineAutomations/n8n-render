@@ -34,10 +34,13 @@ services:
       - key: N8N_PROTOCOL
         value: https
       - key: N8N_LOG_LEVEL
-        value: info
+        value: debug
       # Auto-reinstall missing community packages on startup
       - key: N8N_REINSTALL_MISSING_PACKAGES
         value: "true"
+      # Set user folder explicitly for community packages
+      - key: N8N_USER_FOLDER
+        value: /home/node/.n8n
       - key: N8N_METRICS
         value: "false"
       - key: N8N_DIAGNOSTICS_ENABLED

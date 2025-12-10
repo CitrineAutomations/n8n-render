@@ -30,12 +30,15 @@ ENV N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE=true
 ENV N8N_UNVERIFIED_PACKAGES_ENABLED=true
 ENV N8N_VERIFIED_PACKAGES_ENABLED=true
 ENV NODE_FUNCTION_ALLOW_EXTERNAL="*"
-ENV NPM_CONFIG_PREFIX=/home/node/.n8n
 ENV N8N_METRICS=false
-ENV N8N_LOG_LEVEL=info
+ENV N8N_LOG_LEVEL=debug
 ENV N8N_REINSTALL_MISSING_PACKAGES=true
 ENV N8N_TRUSTED_PROXY_IPS="*"
 ENV DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED=false
+# Ensure community packages are installed in the correct location
+ENV N8N_USER_FOLDER=/home/node/.n8n
+# NPM config prefix needed for community package installation
+ENV NPM_CONFIG_PREFIX=/home/node/.n8n
 
 WORKDIR /home/node/.n8n
 

@@ -1,0 +1,153 @@
+# Render Blueprint for n8n deployment
+# Based on CitrineAutomations/n8n-render
+# Updated for 2025 and n8n 2.0+
+
+services:
+  # N8N Web Service
+  - type: web
+    name: n8n-render
+    env: docker
+    region: oregon
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    
+    # Persistent disk for n8n data
+    # IMPORTANT: Do not change the mount path - it's hardcoded in n8n
+    disk:
+      name: n8n-data
+      mountPath: /home/node/.n8n
+      sizeGB: 1
+    
+    # Health check endpoint
+    healthCheckPath: /healthz
+    
+    # Environment variables
+    # SECURITY: Set these in Render Dashboard, not here!
+    envVars:
+      # Database connection (auto-populated by Render)
+      - key: DATABASE_TYPE
+        value: postgresdb
+      
+      - key: DB_POSTGRESDB_DATABASE
+        fromDatabase:
+          name: n8n-database
+          property: database
+      
+      - key: DB_POSTGRESDB_HOST
+        fromDatabase:
+          name: n8n-database
+          property: host
+      
+      - key: DB_POSTGRESDB_PASSWORD
+        fromDatabase:
+          name: n8n-database
+          property: password
+      
+      - key: DB_POSTGRESDB_PORT
+        fromDatabase:
+          name: n8n-database
+          property: port
+      
+      - key: DB_POSTGRESDB_USER
+        fromDatabase:
+          name: n8n-database
+          property: user
+      
+      # N8N Database configuration (duplicate for n8n 2.0 compatibility)
+      - key: N8N_DB_TYPE
+        value: postgresdb
+      
+      - key: N8N_DB_POSTGRESDB_DATABASE
+        fromDatabase:
+          name: n8n-database
+          property: database
+      
+      - key: N8N_DB_POSTGRESDB_HOST
+        fromDatabase:
+          name: n8n-database
+          property: host
+      
+      - key: N8N_DB_POSTGRESDB_PASSWORD
+        fromDatabase:
+          name: n8n-database
+          property: password
+      
+      - key: N8N_DB_POSTGRESDB_PORT
+        fromDatabase:
+          name: n8n-database
+          property: port
+      
+      - key: N8N_DB_POSTGRESDB_USER
+        fromDatabase:
+          name: n8n-database
+          property: user
+      
+      # N8N Configuration
+      - key: N8N_HOST
+        value: 0.0.0.0
+      
+      - key: N8N_PORT
+        value: 5678
+      
+      - key: N8N_PROTOCOL
+        value: https
+      
+      - key: N8N_TRUSTED_PROXY_IPS
+        value: 0.0.0.0/0
+      
+      # CRITICAL: Set this to your actual domain in Render Dashboard
+      - key: WEBHOOK_URL
+        sync: false
+      
+      # SECURITY: Generate and set these in Render Dashboard
+      - key: N8N_ENCRYPTION_KEY
+        sync: false
+      
+      - key: N8N_USER_MANAGEMENT_JWT_SECRET
+        sync: false
+      
+      # Authentication (set in Render Dashboard)
+      - key: N8N_BASIC_AUTH_ACTIVE
+        value: true
+      
+      - key: N8N_BASIC_AUTH_USER
+        sync: false
+      
+      - key: N8N_BASIC_AUTH_PASSWORD
+        sync: false
+      
+      # User Management
+      - key: N8N_USER_MANAGEMENT_DISABLED
+        value: false
+      
+      - key: N8N_USER_MANAGEMENT_JWT_EXPIRES_IN
+        value: 90d
+      
+      # Execution settings
+      - key: N8N_EXECUTIONS_DATA_SAVE_ON_ERROR
+        value: all
+      
+      - key: N8N_EXECUTIONS_DATA_SAVE_ON_SUCCESS
+        value: none
+      
+      # Logging
+      - key: N8N_LOG_LEVEL
+        value: error
+      
+      # Privacy
+      - key: N8N_DISABLE_INSIGHTS
+        value: true
+      
+      # n8n 2.0+ Binary data mode
+      - key: N8N_BINARY_DATA_MODE
+        value: filesystem
+
+# PostgreSQL Database
+databases:
+  - name: n8n-database
+    databaseName: n8n_database
+    user: n8n_user
+    plan: starter
+    region: oregon
+

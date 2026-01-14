@@ -1,0 +1,23 @@
+# Environment files with sensitive data
+*.env
+.env
+.env.local
+.env.*.local
+n8n-render.env
+
+# N8N data
+.n8n/
+n8n-data/
+
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
